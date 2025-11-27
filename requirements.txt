@@ -7,3 +7,4 @@ tavily-python
 alpha_vantage
 python-dotenv
 requests
+pandas
