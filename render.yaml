@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: chainlit-ai-agent
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: ./
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: ALPHAVANTAGE_API_KEY
+        sync: false
+      - key: PORT
+        value: 10000
+    healthCheckPath: /

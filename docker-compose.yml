@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  chainlit-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chainlit-ai-agent
+    ports:
+      - "8000:8000"
+    environment:
+      # Load from .env file (for local development only)
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}
+      - PORT=8000
+    env_file:
+      - .env
+    volumes:
+      # Mount for development (hot reload)
+      # Comment out for production
+      - .:/app
+      - /app/__pycache__
+      - /app/.chainlit
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# For production deployment, use this minimal version:
+# services:
+#   chainlit-app:
+#     build: .
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       - OPENAI_API_KEY=${OPENAI_API_KEY}
+#       - TAVILY_API_KEY=${TAVILY_API_KEY}
+#       - ALPHAVANTAGE_API_KEY=${ALPHAVANTAGE_API_KEY}
+#     restart: unless-stopped

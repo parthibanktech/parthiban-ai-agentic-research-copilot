@@ -1,0 +1,9 @@
+chainlit
+langchain==0.3.7
+langchain-openai
+langchain-community
+wikipedia
+tavily-python
+alpha_vantage
+python-dotenv
+requests

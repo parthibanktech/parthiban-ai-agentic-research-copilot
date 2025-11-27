@@ -1,0 +1,57 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Chainlit runtime files
+.chainlit/
+.files/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (optional - include if you want smaller images)
+*.md
+!README.md
+
+# Test files
+test_*.py
+*_test.py
+verify_setup.py
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Deployment configs
+render.yaml
+.renderignore
