@@ -2,6 +2,7 @@ services:
   - type: web
     name: chainlit-ai-agent
     env: docker
+    plan: free                    # ← FREE tier (no credit card needed!)
     dockerfilePath: ./Dockerfile
     dockerContext: ./
     envVars:
