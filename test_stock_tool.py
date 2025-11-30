@@ -3,15 +3,15 @@ Quick test script to verify stock price tool works
 """
 import os
 from dotenv import load_dotenv
-from tools import AlphaVantageTool
+from tools import StockPriceTool
 
 # Load environment variables
 load_dotenv()
 
 # Test the stock tool
-tool = AlphaVantageTool()
+tool = StockPriceTool()
 
-print("Testing Alpha Vantage Stock Tool...")
+print("Testing Stock Price Tool (yfinance)...")
 print("=" * 50)
 
 # Test with NVDA

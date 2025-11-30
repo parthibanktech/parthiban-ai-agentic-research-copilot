@@ -16,7 +16,7 @@ def get_agent_executor():
         [
             ("system", "You are a helpful AI assistant. You have access to several tools to help you answer questions. "
                        "If a tool fails, please report the error and try to answer as best as you can or ask for clarification. "
-                       "Always check the stock price using the alpha_vantage_stock_price tool if asked about stocks."),
+                       "Always check the stock price using the get_stock_price tool if asked about stocks."),
             ("placeholder", "{chat_history}"),
             ("human", "{input}"),
             ("placeholder", "{agent_scratchpad}"),

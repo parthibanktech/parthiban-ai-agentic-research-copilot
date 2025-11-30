@@ -4,7 +4,8 @@ langchain-openai
 langchain-community
 wikipedia
 tavily-python
-alpha_vantage
+
 python-dotenv
 requests
 pandas
+yfinance

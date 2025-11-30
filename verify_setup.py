@@ -13,7 +13,7 @@ def verify_setup():
         import langchain_community
         import wikipedia
         import tavily
-        import alpha_vantage
+        import yfinance
         print("✅ All libraries installed successfully.")
         print(f"LangChain version: {langchain.__version__}")
     except ImportError as e:
@@ -27,8 +27,6 @@ def verify_setup():
         missing_keys.append("OPENAI_API_KEY")
     if not os.getenv("TAVILY_API_KEY"):
         missing_keys.append("TAVILY_API_KEY")
-    if not os.getenv("ALPHAVANTAGE_API_KEY"):
-        missing_keys.append("ALPHAVANTAGE_API_KEY")
 
     if missing_keys:
         print(f"⚠️  Missing API Keys: {', '.join(missing_keys)}")
