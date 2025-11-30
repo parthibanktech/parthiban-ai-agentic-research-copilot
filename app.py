@@ -73,13 +73,14 @@ This assistant combines **LangChain**, **OpenAI**, and multiple tools to help yo
 1. 📊 **Stocks & Market Data**
    - _Example_: `How is AAPL performing today?`
    - _Example_: `Compare Tesla and Nvidia over the last year.`
+   - _Example_: `Show me the trend for Microsoft (MSFT) with a chart.`
 
 2. 🌍 **Topic & Web Research**
    - _Example_: `Give me the latest developments in Generative AI.`
    - _Example_: `Summarize recent trends in Indian stock market regulation.`
 
 3. 📚 **General Knowledge & Explanations**
-   - _Example_: `Explain RAG in simple terms.`
+   - _Example_: `Ex plain RAG in simple terms.`
    - _Example_: `Who invented the transistor and why is it important?`
 
 ---
@@ -98,7 +99,7 @@ This assistant combines **LangChain**, **OpenAI**, and multiple tools to help yo
 💡 **Tip:**  
 Start with a message like:
 
-> `Give me a quick market summary of Apple, and then compare it with Microsoft in terms of revenue and stock performance.`
+> `Analyze the stock performance of Apple (AAPL). I want to see the price chart and a summary of its recent market movements.`
 
 I’ll take it from there 🚀
 """

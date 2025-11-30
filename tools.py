@@ -37,6 +37,12 @@ def get_tavily_tool():
 
 # --- Stock Price Tool (via yfinance) ---
 import yfinance as yf
+import matplotlib.pyplot as plt
+import io
+import chainlit as cl
+
+# Use non-interactive backend for server environments
+plt.switch_backend('Agg')
 
 class StockPriceInput(BaseModel):
     symbol: str = Field(description="The stock symbol to look up (e.g., 'AAPL', 'MSFT').")
@@ -49,17 +55,48 @@ class StockPriceTool(BaseTool):
     def _run(self, symbol: str) -> str:
         try:
             ticker = yf.Ticker(symbol)
-            # fast_info is often faster and more reliable for current price than history()
+            
+            # 1. Get Current Price (Fast)
             price = ticker.fast_info.last_price
             currency = ticker.fast_info.currency
             
-            if price is None:
-                # Fallback to history if fast_info fails
-                hist = ticker.history(period="1d")
-                if not hist.empty:
-                    price = hist['Close'].iloc[-1]
-                    currency = "USD" # Assumption if not found
+            # 2. Get Historical Data for Chart (3 Months for better trend)
+            hist = ticker.history(period="3mo")
             
+            if not hist.empty:
+                # Calculate simple metrics
+                hist['SMA_20'] = hist['Close'].rolling(window=20).mean()
+                volatility = hist['Close'].std()
+                
+                # Create the plot
+                plt.figure(figsize=(10, 6))
+                plt.plot(hist.index, hist['Close'], label='Close Price', linewidth=2)
+                plt.plot(hist.index, hist['SMA_20'], label='20-Day SMA', linestyle='--', alpha=0.7)
+                
+                plt.title(f'{symbol} Price Trend & Moving Average (Last 3 Months)')
+                plt.xlabel('Date')
+                plt.ylabel(f'Price ({currency})')
+                plt.grid(True, alpha=0.3)
+                plt.legend()
+                
+                # Add text annotation for volatility
+                plt.figtext(0.15, 0.85, f'Volatility (Std Dev): {volatility:.2f}', fontsize=10, bbox=dict(facecolor='white', alpha=0.8))
+                
+                # Save plot to bytes
+                buf = io.BytesIO()
+                plt.savefig(buf, format='png', dpi=100)
+                buf.seek(0)
+                plt.close() # Clean up memory
+                
+                # Send to Chainlit UI (Async call from Sync context)
+                image = cl.Image(content=buf.getvalue(), name=f"{symbol}_stock_chart", display="inline")
+                cl.run_sync(cl.Message(content=f"Here is the market analysis chart for {symbol} (including 20-day Moving Average):", elements=[image]).send())
+
+            # Fallback for price if fast_info failed
+            if price is None and not hist.empty:
+                price = hist['Close'].iloc[-1]
+                currency = "USD"
+
             if price:
                 return f"The current price of {symbol} is {price:.2f} {currency}."
             else:
